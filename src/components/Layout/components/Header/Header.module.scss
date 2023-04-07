@@ -21,9 +21,11 @@
 .logo{
 cursor: pointer;
 }
+.search ,.search-result{
+    width: 361px;
+}
 .search{
     position: relative;
-width: 361px;
 height: var(--search-height);
 background: rgba(22, 24, 35, .06);
 border-radius: var( --search-border-radius);
@@ -58,6 +60,14 @@ input{
 }
 
 }
+.search-title{
+    font-weight: 600;
+    color: rgba(22,24,35,0.5);
+    font-size: 1.4rem;
+    padding: 5px 12px;
+
+}
+
 .clear,
 .loading{
 position: absolute;
