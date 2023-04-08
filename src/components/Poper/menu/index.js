@@ -36,6 +36,8 @@ function Menu({ children, items = [], onChange = defaultFn }) {
 
     return (
         <Tippy
+        //Di chuyển khối trái chiều ngnag phải chiều cao [ngang,cao]
+        offset={[12,8]}
             //visible có thể làm cho nó hiện lên dễ chỉnh sữa hoặc chỉnh đk cho nó nếu có length>0 thi nó hiện
             //xử lý thêm nếu bằng useState ở tren
             // visible
@@ -59,6 +61,7 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                     </PopperWrapper>
                 </div>
             )}
+            onHide={()=> setHistory((prev) => prev.slice(0 ,1))}
         >
             {children}
         </Tippy>
