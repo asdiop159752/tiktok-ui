@@ -1,9 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 
-import { faCircleXmark, faSpinner, faMagnifyingGlass, 
-    faSignIn, faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faMoon } 
-    from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleXmark,
+    faSpinner,
+    faMagnifyingGlass,
+    faSignIn,
+    faEllipsisVertical,
+    faEarthAsia,
+    faCircleQuestion,
+    faKeyboard,
+    faMoon,
+} from '@fortawesome/free-solid-svg-icons';
 
 import Tippy from '@tippyjs/react/headless';
 
@@ -17,24 +25,54 @@ import Menu from '~/components/Poper/menu';
 
 const cx = classNames.bind(styles);
 
-const MENU_ITEMS=[
+const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
-        title: 'English'
-    } ,
-     {
+        title: 'English',
+        children: {
+            title: 'Languege',
+            data: [
+                {
+                    type: 'languege',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    type: 'languege',
+                    code: 'v',
+                    title: 'VietNam',
+                    // children: {
+                    //     title: 'Languege',
+                    //     data: [
+                    //         {
+                    //             code: 'en',
+                    //             title: 'English 123 ',
+                    //         },
+                    //         {
+                    //             code: 'v',
+                    //             title: 'VietNam 123',
+                    //         },
+                    //     ],
+                    // },
+                    
+                },
+            ],
+        },
+        
+    },
+    {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
         title: 'Feedback and help',
-        to: '/feedback'
+        to: '/feedback',
     },
-     {
+    {
         icon: <FontAwesomeIcon icon={faKeyboard} />,
-        title: 'Keyboard shortcuts'
+        title: 'Keyboard shortcuts',
     },
     {
         icon: <FontAwesomeIcon icon={faMoon} />,
-        switch: "Swith"
-    }
+        switch: 'Swith',
+    },
 ];
 
 function Header() {
@@ -44,6 +82,15 @@ function Header() {
             setSearchResult([]);
         }, 0);
     });
+    //---------Handle logic-------------
+    const handleMenuChange = (menuItem) => {
+        switch(menuItem.type){
+            case 'languege':
+                //Handle change languege
+            break;
+            default: throw new Error('Invalid')
+            }
+    }
 
     return (
         <header className={cx('wrapper')}>
@@ -80,16 +127,16 @@ function Header() {
                     </div>
                 </Tippy>
                 <div className={cx('actions')}>
-                    <Button text >Upload</Button>
-                    <Button  primary leftIcon={ <FontAwesomeIcon icon={faSignIn} />} >Log in</Button>
+                    <Button text>Upload</Button>
+                    <Button primary leftIcon={<FontAwesomeIcon icon={faSignIn} />}>
+                        Log in
+                    </Button>
 
-                    <Menu items ={MENU_ITEMS}
-                     > 
-                    <button className={cx('more-btn')}>
-                        <FontAwesomeIcon icon={faEllipsisVertical} />
-                    </button>
+                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
                     </Menu>
-                    
                 </div>
             </div>
         </header>
