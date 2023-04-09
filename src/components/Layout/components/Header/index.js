@@ -1,8 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import {
-    faCircleXmark,
-    faSpinner,
     faSignIn,
     faEllipsisVertical,
     faEarthAsia,
@@ -14,20 +12,16 @@ import {
     faGear,
     faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
 import Button from '~/components/Button';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
-import { useEffect, useState } from 'react';
-import { Wrapper as PopperWrapper } from '~/components/Poper';
-import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Poper/menu';
-import { InboxIcon, MessengerIcon, SearchIcon, UploadIcon } from '~/components/Icons';
+import { InboxIcon, MessengerIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image'
-
+import Search from '../Search';
 const cx = classNames.bind(styles);
 
 const MENU_ITEMS = [
@@ -79,16 +73,11 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const [searchResult, setSearchResult] = useState([]);
 
     const currentUser = true;
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 0);
-    });
+   
     //---------Handle logic-------------
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -102,7 +91,7 @@ function Header() {
 
     const userMenu = [
         {
-            icon: <profileIcon icon={faUser} />,
+            icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View Profile',
             to: '/@hoaa',
         },  {
@@ -129,34 +118,10 @@ function Header() {
                 <div className={cx('logo')}>
                     <img src={images.logo} alt="Tiktok" />
                 </div>
-                <HeadlessTippy
-                    //Có thể sử dụng trong phần kết quả VD: Tô đen vv
-                    interactive
-                    //Nếu tìm kiếm có trên 0 thì hiện
-                    visible={searchResult.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Account</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input placeholder="Search account and videos" spellCheck={false} />
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-                        <button className={cx('search-btn')}>
-                            <SearchIcon />
-                        </button>
-                    </div>
-                </HeadlessTippy>
+                
+
+           <Search />
+
 
                 <div className={cx('actions')}>
                     {currentUser ? (
