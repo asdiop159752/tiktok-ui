@@ -14,14 +14,27 @@ function Search() {
     const [searchValue, setsearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [showResult,setShowResult] =useState(true)
+    const [loading,setLoading] =useState(false)
 
     const inputRef = useRef();
 
     useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1]);
-        }, 0);
-    });
+        if(!searchValue.trim()){
+            setSearchResult([])
+            return;
+        }
+        setLoading(true)
+
+        fetch(`https://jsonplaceholder.typicode.com/users?q=${encodeURIComponent(searchValue)}&type=more`)
+        .then((res)=> res.json())
+        .then((res)=>{
+            setSearchResult(res)
+            setLoading(false)
+        })
+        .catch(()=>{
+            setLoading(false)
+        })
+    },[searchValue]);
 
     const handleHideresult = () => {
         setShowResult(false)
@@ -38,10 +51,9 @@ function Search() {
                 <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                     <PopperWrapper>
                         <h4 className={cx('search-title')}>Account</h4>
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
+                        {searchResult.map((result) => (
+                        <AccountItem key={result.id} data={result}/>
+                        ))}
                     </PopperWrapper>
                 </div>
             )}
@@ -56,7 +68,8 @@ function Search() {
                     onChange={(e) => setsearchValue(e.target.value)}
                     onFocus={()=> setShowResult(true)}
                 />
-                {!!searchValue && (
+                    {/* Nếu mà có value nhưng phải không có loading thì nó mới hiển thị ra */}
+                {!!searchValue && !loading && (
                     <button
                         className={cx('clear')}
                         onClick={() => {
@@ -67,7 +80,7 @@ function Search() {
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
-                {/* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */}
+               {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                 <button className={cx('search-btn')}>
                     <SearchIcon />
                 </button>
