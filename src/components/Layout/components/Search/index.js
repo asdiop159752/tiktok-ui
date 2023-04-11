@@ -50,6 +50,13 @@ function Search() {
         setShowResult(false);
     };
 
+    const handleChange = (e) =>{
+        const searchvalue =e.target.value
+        if(!searchvalue.startsWith(' ')) {
+    setsearchValue(searchvalue)
+        }
+    }
+
     return (
         <HeadlessTippy
             //Có thể sử dụng trong phần kết quả VD: Tô đen vv
@@ -75,7 +82,7 @@ function Search() {
                     value={searchValue}
                     placeholder="Search account and videos"
                     spellCheck={false}
-                    onChange={(e) => setsearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
                 {/* Nếu mà có value nhưng phải không có loading thì nó mới hiển thị ra */}
@@ -91,7 +98,7 @@ function Search() {
                     </button>
                 )}
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown={(e)=> e.preventDefault()}>
                     <SearchIcon />
                 </button>
             </div>
