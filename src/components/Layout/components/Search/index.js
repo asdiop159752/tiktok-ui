@@ -9,6 +9,8 @@ import { SearchIcon } from '~/components/Icons';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 
+import { useDebounce } from '~/hooks';
+
 const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setsearchValue] = useState('');
@@ -16,16 +18,26 @@ function Search() {
     const [showResult,setShowResult] =useState(true)
     const [loading,setLoading] =useState(false)
 
+    //1 searchValue là 1 chuỗi rỗng và nó chuyền qua bên useDebounce là 1 chuỗi rỗng khi delay 800ml s thì nó hiện ra 
+    //mà khi nó hiện ra cuối cùng khi render lại nên nên nó chỉ lấy kết quả đầu là '' và kết quả cuối cùng là do ta ghi 
+    //khi ngừng 800ml s thì nó sẽ request lên sever lần cuối cùng khi ngừng lại 
+
+    //Bước 1 chuỗi rỗng '' 
+    //Bước 2 khi mình ghi Vd: chữ trường thì mình đang ghi không ngừng thì nó láy giá trị State là 1 chuối rỗng 
+    //Bước 3 khi ghi xong nó set Lại State => nó chỉ lấy kết quả cuối cùng mà chỉ request lại 1 lần là lần cuối khi viết xong
+
+    const debounced = useDebounce(searchValue , 800)
+
     const inputRef = useRef();
 
     useEffect(() => {
-        if(!searchValue.trim()){
+        if(!debounced.trim()){
             setSearchResult([])
             return;
         }
         setLoading(true)
 
-        fetch(`https://jsonplaceholder.typicode.com/users?q=${encodeURIComponent(searchValue)}&type=more`)
+        fetch(`https://jsonplaceholder.typicode.com/users?q=${encodeURIComponent(debounced)}&type=more`)
         .then((res)=> res.json())
         .then((res)=>{
             setSearchResult(res)
@@ -34,7 +46,7 @@ function Search() {
         .catch(()=>{
             setLoading(false)
         })
-    },[searchValue]);
+    },[debounced]);
 
     const handleHideresult = () => {
         setShowResult(false)
