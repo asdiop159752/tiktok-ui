@@ -27,6 +27,7 @@ function Search() {
     //Bước 2 khi mình ghi Vd: chữ trường thì mình đang ghi không ngừng thì nó láy giá trị State là 1 chuối rỗng
     //Bước 3 khi ghi xong nó set Lại State => nó chỉ lấy kết quả cuối cùng mà chỉ request lại 1 lần là lần cuối khi viết xong
 
+ 
     const debounced = useDebounce(searchValue, 800);
 
     const inputRef = useRef();
@@ -58,51 +59,55 @@ function Search() {
     }
 
     return (
-        <HeadlessTippy
-            //Có thể sử dụng trong phần kết quả VD: Tô đen vv
-            interactive
-            //Nếu tìm kiếm có trên 0 thì hiện
-            //2 đk đúng nó mới hiện ra cái thanh meny này
-            visible={showResult && searchResult.length > 0}
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Account</h4>
-                        {searchResult.map((result) => (
-                            <AccountItem key={result.id} data={result} />
-                        ))}
-                    </PopperWrapper>
-                </div>
-            )}
-            onClickOutside={handleHideresult}
-        >
-            <div className={cx('search')}>
-                <input
-                    ref={inputRef}
-                    value={searchValue}
-                    placeholder="Search account and videos"
-                    spellCheck={false}
-                    onChange={handleChange}
-                    onFocus={() => setShowResult(true)}
-                />
-                {/* Nếu mà có value nhưng phải không có loading thì nó mới hiển thị ra */}
-                {!!searchValue && !loading && (
-                    <button
-                        className={cx('clear')}
-                        onClick={() => {
-                            setsearchValue('');
-                            inputRef.current.focus();
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
+        //Using a wrapper <div> or <span> tag around the reference element solves 
+        //this by creating a new parentNode context. 
+       <div>
+            <HeadlessTippy
+                //Có thể sử dụng trong phần kết quả VD: Tô đen vv
+                interactive
+                //Nếu tìm kiếm có trên 0 thì hiện
+                //2 đk đúng nó mới hiện ra cái thanh meny này
+                visible={showResult && searchResult.length > 0}
+                render={(attrs) => (
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search-title')}>Account</h4>
+                            {searchResult.map((result) => (
+                                <AccountItem key={result.id} data={result} />
+                            ))}
+                        </PopperWrapper>
+                    </div>
                 )}
-                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                <button className={cx('search-btn')} onMouseDown={(e)=> e.preventDefault()}>
-                    <SearchIcon />
-                </button>
-            </div>
-        </HeadlessTippy>
+                onClickOutside={handleHideresult}
+            >
+                <div className={cx('search')}>
+                    <input
+                        ref={inputRef}
+                        value={searchValue}
+                        placeholder="Search account and videos"
+                        spellCheck={false}
+                        onChange={handleChange}
+                        onFocus={() => setShowResult(true)}
+                    />
+                    {/* Nếu mà có value nhưng phải không có loading thì nó mới hiển thị ra */}
+                    {!!searchValue && !loading && (
+                        <button
+                            className={cx('clear')}
+                            onClick={() => {
+                                setsearchValue('');
+                                inputRef.current.focus();
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                    )}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                    <button className={cx('search-btn')} onMouseDown={(e)=> e.preventDefault()}>
+                        <SearchIcon />
+                    </button>
+                </div>
+            </HeadlessTippy>
+       </div>
     );
 }
 

@@ -124,7 +124,7 @@ function Header() {
 
                 <div className={cx('actions')}>
                     {currentUser ? (
-                        <>
+                        <> 
                             <Tippy delay={[0, 50]} content="Upload video" placement="bottom">
                                 <button className={cx('action-button')}>
                                     <UploadIcon />
@@ -158,7 +158,7 @@ function Header() {
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/eba731a3973a9d8b7441308af3257fe4~c5_100x100.jpeg?x-expires=1681120800&x-signature=8GWec7pkXFGGIzHtP%2BLwvsuifY4%3D"
+                                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/b11e9a906de4ab0792729eff38059bdc~c5_100x100.jpeg?x-expires=1681380000&x-signature=9hJWlRUr57p3PcShH%2FP%2FY6Sr5YM%3D"
                                 alt="Nguyen Xuan Truong"
                                 fallback="https://w7.pngwing.com/pngs/319/597/png-transparent-tiktok-social-media-logos-brands-icon.png"
                             />

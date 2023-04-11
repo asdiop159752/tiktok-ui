@@ -1,4 +1,6 @@
 .wraper{
+    display: flex;
+    flex-direction: column;
 width: 100%;
 max-height: min((140vh - 96px) - 60px , 734px);
 min-height: 100px;
