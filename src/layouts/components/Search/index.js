@@ -4,7 +4,7 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import { useEffect, useState, useRef } from 'react';
 import { Wrapper as PopperWrapper } from '~/components/Poper';
 
-import * as searchService from '~/apiServices/searchServices';
+import * as searchService from '~/services/searchServices';
 import AccountItem from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icons';
 import classNames from 'classnames/bind';
@@ -110,5 +110,4 @@ function Search() {
        </div>
     );
 }
-
 export default Search;
