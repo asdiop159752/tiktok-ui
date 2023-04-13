@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setsearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showResult, setShowResult] = useState(true);
+    const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
     //1 searchValue là 1 chuỗi rỗng và nó chuyền qua bên useDebounce là 1 chuỗi rỗng khi delay 800ml s thì nó hiện ra
@@ -28,24 +28,24 @@ function Search() {
     //Bước 3 khi ghi xong nó set Lại State => nó chỉ lấy kết quả cuối cùng mà chỉ request lại 1 lần là lần cuối khi viết xong
 
  
-    const debounced = useDebounce(searchValue, 800);
+    const debouncedValue = useDebounce(searchValue, 800);
 
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!debounced.trim()) {
+        if (!debouncedValue.trim()) {
             setSearchResult([]);
             return;
         }
         const fetchApi = async () => {
             setLoading(true);
-            const results = await searchService.search(debounced);
+            const results = await searchService.search(debouncedValue);
             
             setSearchResult(results);
             setLoading(false);
         };
         fetchApi();
-    }, [debounced]);
+    }, [debouncedValue]);
 
     const handleHideresult = () => {
         setShowResult(false);

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
@@ -10,9 +10,9 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const defaultFn= () =>{}
+const defaultFn = () => {};
 
-function Menu({ children, items = [],hideOnClick=false, onChange = defaultFn }) {
+function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn }) {
     const [history, setHistory] = useState([{ data: items }]);
     const current = history[history.length - 1];
 
@@ -26,20 +26,26 @@ function Menu({ children, items = [],hideOnClick=false, onChange = defaultFn }) 
                     onClick={() => {
                         if (isParent) {
                             setHistory((prev) => [...prev, item.children]);
-                        }else{
-                            onChange(item)
+                        } else {
+                            onChange(item);
                         }
                     }}
                 />
             );
         });
     };
+    const handleBack = () => {
+        setHistory((prev) => prev.slice(0, -1));
+    }
+
+    const handleResetToFirstPage = () => 
+    {setHistory((prev) => prev.slice(0, 1))}
 
     return (
         <Tippy
-        hideOnClick={hideOnClick}
-        //Di chuyển khối trái chiều ngnag phải chiều cao [ngang,cao]
-        offset={[12,8]}
+            hideOnClick={hideOnClick}
+            //Di chuyển khối trái chiều ngnag phải chiều cao [ngang,cao]
+            offset={[12, 8]}
             //visible có thể làm cho nó hiện lên dễ chỉnh sữa hoặc chỉnh đk cho nó nếu có length>0 thi nó hiện
             //xử lý thêm nếu bằng useState ở tren
             // visible
@@ -54,27 +60,23 @@ function Menu({ children, items = [],hideOnClick=false, onChange = defaultFn }) 
                         {history.length > 1 && (
                             <Header
                                 title={current.title}
-                                onBack={() => {
-                                    setHistory((prev) => prev.slice(0,- 1));
-                                }}
+                                onBack={handleBack}
                             />
                         )}
-                        <div className={cx('menu-scroll')}>
-                            {renderItems()}
-                        </div>
+                        <div className={cx('menu-scroll')}>{renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}
-            onHide={()=> setHistory((prev) => prev.slice(0 ,1))}
+            onHide={handleResetToFirstPage}
         >
             {children}
         </Tippy>
     );
 }
-Menu.propTypes={
-    children:PropTypes.node.isRequired,
-items:PropTypes.array,
-hideOnClick:PropTypes.bool,
-onChange:PropTypes.func,
-}
+Menu.propTypes = {
+    children: PropTypes.node.isRequired,
+    items: PropTypes.array,
+    hideOnClick: PropTypes.bool,
+    onChange: PropTypes.func,
+};
 export default Menu;
