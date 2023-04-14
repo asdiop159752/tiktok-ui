@@ -1,0 +1,54 @@
+.wrapper {
+    width: 320px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.follow-btn{
+    padding: 7px 16px;
+}
+
+.body {
+    padding-top: 12px;
+    color: #161823;
+}
+
+.nickname {
+    font-size: 1.8rem;
+}
+
+.check {
+font-size: 1.4rem;
+color: #20d5ec;
+margin-left: 4px;
+}
+
+.name {
+    font-size: 1.4rem;
+}
+
+.analytics {
+    margin-top: 10px;
+    font-size: 1.8rem;
+}
+// Cái class đúng sau value 1 value thì nó mới ăn 
+// .value + .value {}
+
+// Còn đây là class value đứng sau 1 value nhưng nó bị ngăn cách bỡi label nhưng dùng dấu ~
+.value ~ .value {
+margin-left: 20px;
+}
+.label {
+    color: #161823bf;
+}
