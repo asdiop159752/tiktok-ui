@@ -19,15 +19,19 @@ function Sidebar () {
 
     },[])
 
-    return <aside className={cx('wrapper')}> 
-        <Menu> 
-        <MenuItem title= "For Your" to={config.routes.home} icon={<HomeIcon />} activeIcon={<HomeActiveIcon />} />    
-        <MenuItem title= " Following" to={config.routes.following} icon={<UserGroupIcon />}  activeIcon={<UserGroupActivecIcon />} />    
-        <MenuItem title= "LIVE" to={config.routes.live} icon={<LiveIcon />}  activeIcon={<LiveActiveIcon />} />    
-        </Menu> 
-        <SuggestedAccounts label='Suggested accounts' data={suggestedUsers} />
-        <SuggestedAccounts label='Following accounts'/>
-            </aside>
+    return (
+   <div className="outside">
+        <aside className={cx('wrapper')}> 
+            <Menu> 
+            <MenuItem title= "For Your" to={config.routes.home} icon={<HomeIcon />} activeIcon={<HomeActiveIcon />} />    
+            <MenuItem title= " Following" to={config.routes.following} icon={<UserGroupIcon />}  activeIcon={<UserGroupActivecIcon />} />    
+            <MenuItem title= "LIVE" to={config.routes.live} icon={<LiveIcon />}  activeIcon={<LiveActiveIcon />} />    
+            </Menu> 
+            <SuggestedAccounts label='Suggested accounts' data={suggestedUsers} />
+            <SuggestedAccounts label='Following accounts'/>
+                </aside>
+   </div>
+            )
 }
 
 export default Sidebar ;

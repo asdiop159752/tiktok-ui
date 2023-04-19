@@ -3,6 +3,7 @@ import Header from '~/layouts/components/Header'
 import Sidebar from '~/layouts/components/Sidebar'
 import classNames from 'classnames/bind';
 import styles from './DefaultLayout.module.scss'
+import ScrollGlobal from '~/components/scroll-global';
 
 const cx = classNames.bind(styles)
 function DefaultLayout({children}) {
@@ -12,6 +13,7 @@ function DefaultLayout({children}) {
         <div className={cx('container')}>
         <Sidebar />
             <div className={cx('content')} >{children} </div>
+            <ScrollGlobal />
         </div>
     </div> 
     );
